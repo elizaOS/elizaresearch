@@ -92,12 +92,19 @@ describe("worker.fetch routing", () => {
     expect(served).toBe(`${ORIGIN}/company/`);
   });
 
-  it("redirects the old study URL to the homepage on either domain", async () => {
-    for (const origin of [ORIGIN, "https://seniorstudy.org"]) {
-      const response = await worker.fetch(new Request(`${origin}/study/?ref=flyer`), {});
-      expect(response.status).toBe(308);
-      expect(response.headers.get("location")).toBe(`${origin}/?ref=flyer`);
-    }
+  it("serves the study at the seniorstudy root and preserves the company root", async () => {
+    const requests = [];
+    const env = { ASSETS: { fetch: async (request) => {
+      requests.push(request.url);
+      return new Response(new URL(request.url).pathname === "/study/" ? "study" : "company");
+    } } };
+    const company = await worker.fetch(new Request(`${ORIGIN}/`), env);
+    const study = await worker.fetch(new Request(`${ORIGIN}/study/`), env);
+    const alias = await worker.fetch(new Request("https://seniorstudy.org/?ref=flyer"), env);
+    expect(await company.text()).toBe("company");
+    expect(await study.text()).toBe("study");
+    expect(await alias.text()).toBe("study");
+    expect(requests).toEqual([`${ORIGIN}/`, `${ORIGIN}/study/`, "https://seniorstudy.org/study/?ref=flyer"]);
   });
 
   it("counts multibyte input toward the request size limit", async () => {

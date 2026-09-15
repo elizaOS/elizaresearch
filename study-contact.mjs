@@ -155,9 +155,9 @@ async function handleContact(request, env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    if (url.pathname === "/study" || url.pathname === "/study/") {
-      url.pathname = "/";
-      return Response.redirect(url.toString(), 308);
+    if (url.hostname === "seniorstudy.org" && url.pathname === "/") {
+      url.pathname = "/study/";
+      return env.ASSETS.fetch(new Request(url, request));
     }
     if (url.pathname === "/api/study-contact") {
       return handleContact(request, env);
