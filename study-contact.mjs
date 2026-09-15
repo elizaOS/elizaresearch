@@ -161,6 +161,10 @@ export default {
       const asset = await env.ASSETS.fetch(new Request(url, request));
       const response = new Response(asset.body, asset);
       response.headers.set("Cache-Control", "no-store");
+      if (url.searchParams.get("reset-cache") === "1") {
+        // Recover browser-cached redirects without clearing cookies or storage.
+        response.headers.set("Clear-Site-Data", '"cache"');
+      }
       return response;
     }
     if (url.pathname === "/api/study-contact") {

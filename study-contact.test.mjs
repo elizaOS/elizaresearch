@@ -112,6 +112,16 @@ describe("worker.fetch routing", () => {
     expect(requests).toEqual([`${ORIGIN}/`, `${ORIGIN}/study/`, `${ORIGIN}/study/`, "https://seniorstudy.org/study/?ref=flyer"]);
   });
 
+  it("allows an explicit cache-only recovery without clearing login data", async () => {
+    const env = { ASSETS: { fetch: async () => new Response("study") } };
+    const normal = await worker.fetch(new Request(`${ORIGIN}/study`), env);
+    const recovery = await worker.fetch(new Request(`${ORIGIN}/study?reset-cache=1`), env);
+    expect(normal.headers.get("clear-site-data")).toBeNull();
+    expect(recovery.headers.get("clear-site-data")).toBe('"cache"');
+    expect(recovery.headers.get("cache-control")).toBe("no-store");
+    expect(await recovery.text()).toBe("study");
+  });
+
   it("counts multibyte input toward the request size limit", async () => {
     const response = await worker.fetch(contactRequest({message: "🧡".repeat(9000)}), SECRETS);
     expect(response.status).toBe(413);
