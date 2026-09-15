@@ -30,4 +30,8 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
       - name: Check production
-        run: curl --fail --retry 3 --silent --show-error https://elizaresearch.ai/ -o /dev/null
+        run: |
+          for domain in elizaresearch.ai seniorstudy.org; do
+            curl --fail --retry 3 --silent --show-error "https://$domain/" -o "$RUNNER_TEMP/$domain.html"
+            cmp public/index.html "$RUNNER_TEMP/$domain.html"
+          done

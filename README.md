@@ -1,7 +1,8 @@
 # elizaresearch.ai
 
-Company website for Eliza Research: https://elizaresearch.ai.
-A self-contained HTML page with local images and fonts; no application build or framework dependencies.
+Senior independence study website at https://elizaresearch.ai and https://seniorstudy.org. Both domains serve the same homepage. `/study/` redirects to `/`; the former company page remains at `/company/`.
+
+Static HTML with local images and fonts, plus a Worker for contact-form delivery. No application build or framework dependencies.
 
 ## Development
 
@@ -19,9 +20,9 @@ Only `public/` is deployed; tooling and operational documentation remain outside
 
 ## Deployment
 
-`bun run deploy` updates the existing Cloudflare Worker `elizaresearch` and its custom domain `elizaresearch.ai`. Keep the existing account and Worker; repository migration does not require domain registration, nameserver, or email DNS changes.
+`bun run deploy` updates the existing Cloudflare Worker `elizaresearch` and its custom domains `elizaresearch.ai` and `seniorstudy.org`. Keep the existing account and Worker; repository migration does not require domain registration, nameserver, or email DNS changes.
 
-GitHub Actions checks pull requests and main pushes. The Deploy workflow is manually dispatched from `main`, repeats the checks, and uses the `production` environment. Configure its `CLOUDFLARE_API_TOKEN` secret and `CLOUDFLARE_ACCOUNT_ID` variable before running it. Use a Cloudflare deployment token scoped to the owning account and required Worker/domain permissions. Never commit credentials.
+GitHub Actions checks pull requests and main pushes. The Deploy workflow is manually dispatched from `main`, repeats the checks, and uses the `production` environment. Configure its `CLOUDFLARE_API_TOKEN` secret and `CLOUDFLARE_ACCOUNT_ID` variable before running it. Use a Cloudflare deployment token scoped to the owning account and required Worker/domain permissions for both zones. Never commit credentials.
 
 For attended deployment, authenticate with `bunx wrangler login`, then run `bun run deploy` from a clean, tested checkout of this repository. Record the source commit and returned deployment version in the release record. To roll back, use `bunx wrangler rollback <previous-version-id>` after checking the version with `bunx wrangler deployments list`.
 
@@ -46,3 +47,18 @@ The seven-slide senior independence deck lives in `deck/public/` and is deployed
 Navigation supports arrow keys, Space, Page Up/Down, Home/End, desktop edge clicks, horizontal touch swipes, and two arrow buttons floating at the bottom right. Each slide has a stable hash URL. Dense slides scroll vertically on small screens. Inactive slides are inert and hidden from assistive technology. Reduced-motion and landscape print layouts are included.
 
 The **Deploy deck** GitHub workflow uses the existing production environment credentials and verifies that all deployed assets match the source files. For attended deployment, the existing Wrangler login can be used. The root company website has a separate Worker/configuration. See `deck/SOURCE.md` for reference provenance and `deck/RELEASE.md` for verification.
+
+## Study contact form
+
+`POST /api/study-contact` validates submissions and sends through the Cloudflare
+`STUDY_EMAIL` binding, restricted to `study@elizaresearch.ai`. The study inbox
+forwards to Shaw and Camilla through Google Workspace, the existing mail host.
+The sender domain must be enabled and its DNS configured in Cloudflare Email
+Service. No third-party mail API key is needed.
+
+The form reports delivery errors and offers a phone fallback. A honeypot filters
+simple bots without sending a message. `/study/` redirects to the homepage on
+either domain, preserving query parameters.
+
+Adapted from elizaOS/eliza PR #31359, commit
+`955f20c2794c1fa7bfd55532d8a6e095d192bf18` (Camilla Castro).
