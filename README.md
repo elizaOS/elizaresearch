@@ -53,8 +53,8 @@ The **Deploy deck** GitHub workflow uses the existing production environment cre
 `POST /api/study-contact` validates submissions and sends through the Cloudflare
 `STUDY_EMAIL` binding, restricted to `study@elizaresearch.ai`. The study inbox
 forwards to Shaw and Camilla through Google Workspace, the existing mail host.
-The sender domain must be verified in Cloudflare Email Service, and the study
-inbox must be a verified destination. No third-party mail API key is needed.
+The sender domain must be enabled and its DNS configured in Cloudflare Email
+Service. No third-party mail API key is needed.
 
 The form reports delivery errors and offers a phone fallback. A honeypot filters
 simple bots without sending a message. `/study/` redirects to the homepage on
