@@ -14,8 +14,8 @@ bun run preview
 bun run deploy:check
 ```
 
-Preview runs on http://localhost:4173 using Cloudflare's local assets server, including `_headers` and `.assetsignore` behavior.
-Only `index.html`, `_headers`, and `assets/` are included in deployment.
+Preview runs on http://localhost:4173 using Cloudflare's local assets server, including `_headers` behavior.
+Only `public/` is deployed; tooling and operational documentation remain outside the served directory.
 
 ## Deployment
 
