@@ -5,16 +5,18 @@
   "type": "module",
   "description": "Static company site for elizaresearch.ai",
   "scripts": {
-    "preview": "bunx serve@14 . -l 4173",
-    "deploy": "bunx wrangler@4.122.0 deploy",
+    "preview": "wrangler dev --port 4173",
+    "deploy": "wrangler deploy",
     "mail:security": "node ./mail-security.mjs",
-    "test": "bun test ./lifecycle-alpha.test.mjs ./mail-security.test.mjs"
+    "test": "bun test ./lifecycle-alpha.test.mjs ./mail-security.test.mjs",
+    "deploy:check": "wrangler deploy --dry-run"
   },
-  "elizaos": {
-    "scripts": {
-      "testLanes": [
-        "server"
-      ]
-    }
+  "packageManager": "bun@1.3.14",
+  "engines": {
+    "node": "24.15.0",
+    "bun": "1.3.14"
+  },
+  "devDependencies": {
+    "wrangler": "4.122.0"
   }
 }

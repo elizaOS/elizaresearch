@@ -12,8 +12,8 @@ ownership facts below in the private ops vault and reference them by name only.
 ## Automated DNS check
 
 ```bash
-bun run --cwd packages/elizaresearch mail:security          # elizaresearch.ai
-node packages/elizaresearch/mail-security.mjs example.test  # any other domain
+bun run mail:security          # elizaresearch.ai
+node ./mail-security.mjs example.test  # any other domain
 ```
 
 The command resolves live DNS and exits non-zero when a control fails. It
@@ -39,7 +39,7 @@ alignment can be reviewed before any mail is affected:
    The `rua` mailbox must be a company-controlled address on this domain, or an
    external destination that has published the matching
    `elizaresearch.ai._report._dmarc.<external-domain>` authorization record.
-2. Wait for propagation and confirm with `bun run --cwd packages/elizaresearch mail:security`.
+2. Wait for propagation and confirm with `bun run mail:security`.
 3. Collect at least two weeks of aggregate reports. Confirm that all legitimate
    sources pass SPF **or** DKIM with identifier alignment before advancing.
 4. Advance to `p=quarantine; pct=25`, widen `pct` to 100, then move to

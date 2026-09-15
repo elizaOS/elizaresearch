@@ -311,7 +311,7 @@ async function main() {
   }
   if (!report.ok) {
     console.log(
-      "\nSee packages/elizaresearch/MAIL-SECURITY.md for the remediation runbook.",
+      "\nSee ./MAIL-SECURITY.md for the remediation runbook.",
     );
     process.exitCode = 1;
   }
