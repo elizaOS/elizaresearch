@@ -20,4 +20,14 @@ for (const [, asset] of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
 }
 for (const id of ['slide-status']) assert(html.includes(`id="${id}"`));
 for (const text of ['product concept, being validated in research', 'Sources on request:', 'mailto:camilla@elizaresearch.ai']) assert(html.includes(text));
+const embed = JSON.parse(await readFile(resolve(root, 'oembed.json'), 'utf8'));
+assert.equal(embed.version, '1.0');
+assert.equal(embed.type, 'link');
+assert(html.includes('type="application/json+oembed"'));
+assert(html.includes('name="twitter:card" content="summary_large_image"'));
+assert(html.includes(`property="og:image" content="${embed.thumbnail_url}"`));
+const preview = await readFile(resolve(root, new URL(embed.thumbnail_url).pathname.slice(1)));
+assert.equal(preview.subarray(1, 4).toString(), 'PNG');
+assert.equal(preview.readUInt32BE(16), embed.thumbnail_width);
+assert.equal(preview.readUInt32BE(20), embed.thumbnail_height);
 console.log('Deck check passed: seven slides, unique URLs, navigation, source labels, and local assets.');

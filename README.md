@@ -62,3 +62,5 @@ root serves the study through the same Worker.
 
 Adapted from elizaOS/eliza PR #31359, commit
 `955f20c2794c1fa7bfd55532d8a6e095d192bf18` (Camilla Castro).
+
+The deck includes Open Graph and large-image Twitter cards plus oEmbed discovery at `https://deck.elizaresearch.ai/oembed.json` (link type). The 1200×630 share preview is `deck/public/assets/senior-independence-preview.png`; its vector source is `deck/share-preview.svg`.
