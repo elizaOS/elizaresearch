@@ -34,3 +34,15 @@ For attended deployment, authenticate with `bunx wrangler login`, then run `bun 
 Extracted from `elizaOS/eliza`, directory `packages/elizaresearch`, at commit `a2665f15af93dcb56434081b7cc4825d8cc243e7`.
 The available history from the source checkout's shallow boundary is retained; older history remains in the [original repository](https://github.com/elizaOS/eliza/tree/a2665f15af93dcb56434081b7cc4825d8cc243e7/packages/elizaresearch).
 Migration tracking: https://github.com/elizaOS/eliza/issues/31444.
+
+## Research deck
+
+The seven-slide senior independence deck lives in `deck/public/` and is deployed independently at https://deck.elizaresearch.ai using the `elizaresearch-deck` Worker.
+
+- `bun run deck:preview` — preview at http://localhost:4184.
+- `bun run deck:deploy:check` — validate slide structure, assets, JavaScript, and Worker configuration.
+- `bun run deck:deploy` — deploy only the deck and its custom subdomain.
+
+Navigation supports arrow keys, Space, Page Up/Down, Home/End, desktop edge clicks, horizontal touch swipes, previous/next buttons, and the slide picker. Each slide has a stable hash URL. Dense slides scroll vertically on small screens. Inactive slides are inert and hidden from assistive technology. Reduced-motion and landscape print layouts are included.
+
+The **Deploy deck** GitHub workflow uses the existing production environment credentials and verifies that all deployed assets match the source files. For attended deployment, the existing Wrangler login can be used. The root company website has a separate Worker/configuration. See `deck/SOURCE.md` for reference provenance and `deck/RELEASE.md` for verification.
