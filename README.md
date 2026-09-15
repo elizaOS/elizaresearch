@@ -1,6 +1,6 @@
 # elizaresearch.ai
 
-Senior independence study website at https://elizaresearch.ai and https://seniorstudy.org. Both domains serve the same homepage. `/study/` redirects to `/`; the former company page remains at `/company/`.
+Company website at https://elizaresearch.ai. The senior independence study is at https://elizaresearch.ai/study/ and https://seniorstudy.org. The seniorstudy.org root serves the study without changing its visible URL.
 
 Static HTML with local images and fonts, plus a Worker for contact-form delivery. No application build or framework dependencies.
 
@@ -57,8 +57,8 @@ The sender domain must be enabled and its DNS configured in Cloudflare Email
 Service. No third-party mail API key is needed.
 
 The form reports delivery errors and offers a phone fallback. A honeypot filters
-simple bots without sending a message. `/study/` redirects to the homepage on
-either domain, preserving query parameters.
+simple bots without sending a message. The company homepage and study page have separate paths; the seniorstudy.org
+root serves the study through the same Worker.
 
 Adapted from elizaOS/eliza PR #31359, commit
 `955f20c2794c1fa7bfd55532d8a6e095d192bf18` (Camilla Castro).
