@@ -8,7 +8,7 @@ import { readFileSync } from "node:fs";
 import vm from "node:vm";
 
 function loadProductionLifecycle() {
-  const html = readFileSync(new URL("./public/index.html", import.meta.url), "utf8");
+  const html = readFileSync(new URL("./public/company/index.html", import.meta.url), "utf8");
   const script = html.match(/<script>\s*([\s\S]*?)\s*<\/script>/u)?.[1];
   if (!script) throw new Error("Production particle script was not found");
 

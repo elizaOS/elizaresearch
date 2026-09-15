@@ -1,9 +1,24 @@
 name = "elizaresearch"
+main = "worker.mjs"
 compatibility_date = "2026-08-01"
 
 [assets]
 directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*", "/study", "/study/*"]
 
 [[routes]]
 pattern = "elizaresearch.ai"
 custom_domain = true
+
+[[routes]]
+pattern = "seniorstudy.org"
+custom_domain = true
+
+[vars]
+CONTACT_TO = "study@elizaresearch.ai"
+CONTACT_FROM = "website@seniorstudy.org"
+
+[[send_email]]
+name = "STUDY_EMAIL"
+destination_address = "study@elizaresearch.ai"

@@ -8,7 +8,7 @@
     "preview": "wrangler dev --port 4173",
     "deploy": "wrangler deploy",
     "mail:security": "node ./mail-security.mjs",
-    "test": "bun test ./lifecycle-alpha.test.mjs ./mail-security.test.mjs",
+    "test": "bun test ./lifecycle-alpha.test.mjs ./mail-security.test.mjs ./study-contact.test.mjs",
     "deploy:check": "wrangler deploy --dry-run",
     "deck:check": "node deck/scripts/check.mjs && node --check deck/public/deck.js",
     "deck:preview": "wrangler dev --config deck/wrangler.toml --port 4184",
