@@ -43,6 +43,6 @@ The seven-slide senior independence deck lives in `deck/public/` and is deployed
 - `bun run deck:deploy:check` — validate slide structure, assets, JavaScript, and Worker configuration.
 - `bun run deck:deploy` — deploy only the deck and its custom subdomain.
 
-Navigation supports arrow keys, Space, Page Up/Down, Home/End, desktop edge clicks, horizontal touch swipes, previous/next buttons, and the slide picker. Each slide has a stable hash URL. Dense slides scroll vertically on small screens. Inactive slides are inert and hidden from assistive technology. Reduced-motion and landscape print layouts are included.
+Navigation supports arrow keys, Space, Page Up/Down, Home/End, desktop edge clicks, horizontal touch swipes, and two arrow buttons floating at the bottom right. Each slide has a stable hash URL. Dense slides scroll vertically on small screens. Inactive slides are inert and hidden from assistive technology. Reduced-motion and landscape print layouts are included.
 
 The **Deploy deck** GitHub workflow uses the existing production environment credentials and verifies that all deployed assets match the source files. For attended deployment, the existing Wrangler login can be used. The root company website has a separate Worker/configuration. See `deck/SOURCE.md` for reference provenance and `deck/RELEASE.md` for verification.
