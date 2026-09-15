@@ -3,9 +3,7 @@
   const slides = [...document.querySelectorAll('.slide')];
   const previous = document.querySelector('[data-deck-action="previous"]');
   const next = document.querySelector('[data-deck-action="next"]');
-  const picker = document.querySelector('#slide-picker');
   const status = document.querySelector('#slide-status');
-  const progress = document.querySelector('#progress');
   let index = 0;
   let touchStart = null;
   const interactive = target => target instanceof Element && !!target.closest('a, button, select, input, textarea, label, [contenteditable="true"]');
@@ -30,17 +28,14 @@
     });
     if (changed) slides[index].scrollTop = 0;
     if (restoreFocus) slides[index].focus({preventScroll: true});
-    picker.value = String(index);
     previous.disabled = index === 0;
     next.disabled = index === slides.length - 1;
     status.textContent = `${index + 1} / ${slides.length}: ${slides[index].dataset.title}`;
-    progress.style.width = `${(index + 1) / slides.length * 100}%`;
     document.title = `${slides[index].dataset.title} — Eliza Research`;
     if (syncHash && location.hash !== `#${slides[index].id}`) history.replaceState(null, '', `#${slides[index].id}`);
   }
   previous.addEventListener('click', () => go(index - 1));
   next.addEventListener('click', () => go(index + 1));
-  picker.addEventListener('change', () => go(Number(picker.value)));
   window.addEventListener('keydown', event => {
     const control = event.target instanceof Element && event.target.closest('.deck-control');
     if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || (interactive(event.target) && !control) || (control && (event.key === ' ' || event.key === 'Enter'))) return;
