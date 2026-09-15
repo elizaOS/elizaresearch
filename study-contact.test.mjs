@@ -99,12 +99,17 @@ describe("worker.fetch routing", () => {
       return new Response(new URL(request.url).pathname === "/study/" ? "study" : "company");
     } } };
     const company = await worker.fetch(new Request(`${ORIGIN}/`), env);
+    const direct = await worker.fetch(new Request(`${ORIGIN}/study`), env);
     const study = await worker.fetch(new Request(`${ORIGIN}/study/`), env);
     const alias = await worker.fetch(new Request("https://seniorstudy.org/?ref=flyer"), env);
     expect(await company.text()).toBe("company");
+    expect(await direct.text()).toBe("study");
+    expect(direct.status).toBe(200);
+    expect(direct.headers.get("location")).toBeNull();
+    expect(direct.headers.get("cache-control")).toBe("no-store");
     expect(await study.text()).toBe("study");
     expect(await alias.text()).toBe("study");
-    expect(requests).toEqual([`${ORIGIN}/`, `${ORIGIN}/study/`, "https://seniorstudy.org/study/?ref=flyer"]);
+    expect(requests).toEqual([`${ORIGIN}/`, `${ORIGIN}/study/`, `${ORIGIN}/study/`, "https://seniorstudy.org/study/?ref=flyer"]);
   });
 
   it("counts multibyte input toward the request size limit", async () => {
