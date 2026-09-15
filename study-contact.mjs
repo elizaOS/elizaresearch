@@ -155,9 +155,13 @@ async function handleContact(request, env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    if (url.hostname === "seniorstudy.org" && url.pathname === "/") {
+    if (url.pathname === "/study" || url.pathname === "/study/" ||
+        (url.hostname === "seniorstudy.org" && url.pathname === "/")) {
       url.pathname = "/study/";
-      return env.ASSETS.fetch(new Request(url, request));
+      const asset = await env.ASSETS.fetch(new Request(url, request));
+      const response = new Response(asset.body, asset);
+      response.headers.set("Cache-Control", "no-store");
+      return response;
     }
     if (url.pathname === "/api/study-contact") {
       return handleContact(request, env);
