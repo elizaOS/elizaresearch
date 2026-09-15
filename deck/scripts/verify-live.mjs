@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../public');
 const base = 'https://deck.elizaresearch.ai/';
-for (const asset of ['index.html', 'styles.css', 'deck.js', 'assets/mark.svg', 'assets/geist-sans-latin.woff2']) {
+for (const asset of ['index.html', 'styles.css', 'deck.js', 'assets/mark.svg', 'assets/logo-white.svg', 'assets/senior-independence-preview.png', 'oembed.json', 'assets/geist-sans-latin.woff2']) {
   const response = await fetch(new URL(asset === 'index.html' ? '' : asset, base));
   assert.equal(response.status, 200, `${asset}: HTTP ${response.status}`);
   const served = Buffer.from(await response.arrayBuffer());
