@@ -13,7 +13,8 @@
     "deck:check": "node deck/scripts/check.mjs && node --check deck/public/deck.js",
     "deck:preview": "wrangler dev --config deck/wrangler.toml --port 4184",
     "deck:deploy:check": "bun run deck:check && wrangler deploy --config deck/wrangler.toml --dry-run",
-    "deck:deploy": "bun run deck:check && wrangler deploy --config deck/wrangler.toml"
+    "deck:deploy": "bun run deck:check && wrangler deploy --config deck/wrangler.toml",
+    "deck:verify": "node deck/scripts/verify-live.mjs"
   },
   "packageManager": "bun@1.3.14",
   "engines": {

@@ -17,4 +17,4 @@ Cloudflare authoritative DNS, 1.1.1.1, and 8.8.8.8 returned the new hostname. Th
 
 ## Future deployment
 
-Use `bun run deck:deploy` from the checked source or dispatch **Deploy deck** on `main` after configuring the production environment credentials described in the root README. Only the deck configuration should be used for deck deployments.
+Use `bun run deck:deploy` from the checked source or dispatch **Deploy deck** on `main` using the existing production environment credentials (verified present). Only the deck configuration should be used for deck deployments.
